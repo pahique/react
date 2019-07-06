@@ -1,5 +1,5 @@
 {
-  "name": "tictac-app",
+  "name": "tictactoe-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
