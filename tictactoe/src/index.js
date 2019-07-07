@@ -85,9 +85,10 @@ class Game extends React.Component {
   }
 
   toggleReverse() {
-    this.setState({
-      reversed: !this.state.reversed,
-    });
+    // different way to update state, better for updates based on current values of state
+    this.setState((state, props) => ({
+      reversed: !state.reversed,
+    }));
   }
 
   render() {
