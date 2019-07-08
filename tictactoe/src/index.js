@@ -17,7 +17,7 @@ function Square(props) {
 
 class Board extends React.Component {
   renderSquare(i, highlight) {
-    return <Square value={this.props.squares[i]} highlight={highlight}
+    return <Square key={i} value={this.props.squares[i]} highlight={highlight}
                    onClick={() => this.props.onClick(i)} />;
   }
 
@@ -31,7 +31,7 @@ class Board extends React.Component {
         let highlight = winnerSquares ? winnerSquares.includes(squareNumber) : false;
         columns.push(this.renderSquare(squareNumber++, highlight));
       }
-      rows.push(<div className="board-row">{columns}</div>);
+      rows.push(<div key={i} className="board-row">{columns}</div>);
     }
 
     return (
@@ -55,6 +55,9 @@ class Game extends React.Component {
       stepNumber: 0,
       xIsNext: true,
     };
+    // Alternative to using {() => this.toggleReverse()} in the button,
+    // by doing this binding I can use {this.toggleReverse} instead
+    this.toggleReverse = this.toggleReverse.bind(this);
   }
 
   handleClick(i) {
@@ -89,6 +92,10 @@ class Game extends React.Component {
     this.setState((state, props) => ({
       reversed: !state.reversed,
     }));
+    // Yet a simpler way to do the same thing:
+    // this.setState(state => ({
+    //   reversed: !state.reversed,
+    // }));
   }
 
   render() {
@@ -129,7 +136,7 @@ class Game extends React.Component {
         <div className="game-info">
           <div>{status}</div>
           <ol reversed={this.state.reversed}>{moves}</ol>
-          <button onClick={() => this.toggleReverse()}>Reverse toggle</button>
+          <button onClick={this.toggleReverse}>Reverse toggle</button>
         </div>
       </div>
     );
